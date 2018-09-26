@@ -1,0 +1,27 @@
+procedure text_packet_read(integer client,integer inputstream)
+  object res
+  atom object_id
+  res=input_stream_readutf(inputstream)
+  object_id=input_stream_readint(inputstream)
+  res=input_stream_readint(inputstream)
+  res=input_stream_readbyte(inputstream)
+  res=input_stream_readutf(inputstream)
+  res=input_stream_readutf(inputstream)
+  --puts(1,res&"\n")
+
+  --if object_id!=-1 then
+  --  player_message_set(object_id_to_player_class[object_id],{res,33*12})
+  --end if
+
+  res=input_stream_readutf(inputstream)
+
+  --	this.name_ = badi.readUTF(); // UTF
+	--	this.objectId_ = badi.readInt(); // Int
+	--	this.numStars_ = badi.readInt(); // Int
+	--	this.bubbleTime_ = badi.readUnsignedByte(); // UnsignedByte
+	--	this.recipient_ = badi.readUTF(); // UTF
+	--	this.text_ = badi.readUTF(); // UTF
+	--	this.cleanText_ = badi.readUTF(); // UTF
+end procedure
+
+packet_read_id[text_packet+1]=routine_id("text_packet_read")

@@ -1,0 +1,50 @@
+	public final static double SPEED_MULTIPLIER = 1d / 67d / 200d; // 0.014925373134328358 | 7.462686567164179e-5    sed 7.462686567164179E-5
+	public final static double SPEED_BASE = 0.7d / 200d; // 0.004 0.8
+
+double speed = GameConsts.SPEED_BASE + (GameConsts.SPEED_MULTIPLIER * gCon.world.getUs().getTotalSpeed());
+
+
+public int getTotalSpeed() {
+		if (objStatData.getStatData(22) != null)
+			return objStatData.getStatData(22).numValue;
+		return -1;
+	}
+
+
+
+public int currentTime() {
+		return (int) (System.currentTimeMillis() - startTime);
+	}
+
+
+	if (time > 600)
+			time = 600; // even if we had a lag spike, moving more than a certain amount will still kick us
+		
+		//if (time > 200)
+			//time = 200; // even if we had a lag spike, moving more than a certain amount will still kick us
+		//if (loc.distanceTo(gCli.tpos)>0.01)
+		{
+		loc.x += time * speed * Math.sin(Math.toRadians(angle));
+		loc.y -= time * speed * Math.cos(Math.toRadians(angle));
+
+
+
+} else if (rw instanceof NEW_TICK_Packet) {
+			
+			NEW_TICK_Packet ntp = (NEW_TICK_Packet) rw;
+			if (ntp.statuses_!=null)
+			{
+			  gCon.world.parseNewTick(ntp);
+			}
+			MOVE_Packet mp = new MOVE_Packet();
+			mp.time_ = gCli.currentTime();
+			mp.tickId_ =gCon.world.getCurrentTick();
+			//mp.newPosition_ = new Location(139,140) ;//gCon.moveClazz.move(mp.time_ - lastMoveTime);
+			mp.newPosition_ = gCon.moveClazz.move(mp.time_ - lastMoveTime);
+			gCon.world.setPosition(mp.newPosition_);
+			lastMoveTime = mp.time_;
+			mp.records_ = new LocationWTime[0];
+			
+			gCon.sendQueue.add(mp);
+			
+		} else if (rw instanceof GOTO_Packet) {

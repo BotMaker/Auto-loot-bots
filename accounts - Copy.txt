@@ -1,0 +1,16 @@
+lootbot0@gmail.com
+123456
+128
+135
+lootbot1@gmail.com
+123456
+128
+145
+lootbot2@gmail.com
+123456
+140
+135
+lootbot3@gmail.com
+123456
+140
+145

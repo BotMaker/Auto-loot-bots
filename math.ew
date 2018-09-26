@@ -1,0 +1,64 @@
+global function point_distance(atom x1,atom y1 , atom x2, atom y2)
+    atom x, y
+    --x = power(floor(x1) - floor(x2), 2)
+    --y = power(floor(y1) - floor(y2), 2)
+
+    x = power(x1 - x2, 2)
+    y = power(y1 - y2, 2)
+
+    return sqrt(x + y)
+end function
+
+constant HALFPI    = PI/2
+
+global function atan2(atom y, atom x)
+	
+  if x > 0 then
+		
+    return arctan(y/x)
+	
+  elsif x < 0 then
+		
+    if y < 0 then
+			
+      return arctan(y/x) - PI
+		
+    else
+			
+      return arctan(y/x) + PI
+		
+    end if
+	
+  elsif y > 0 then
+		
+    return HALFPI
+	
+  elsif y < 0 then
+		
+    return -(HALFPI)
+	
+  else
+		
+    return 0
+	
+  end if
+
+end function
+
+object junk
+junk = {{},{}}
+for j = 360 to 0 by -1 do
+    junk[1] = append(junk[1], sin(j*PI/180) )
+    junk[2] = append(junk[2], cos(j*PI/180) )
+end for
+constant sin_loTRUE2up = junk[1], cos_loTRUE2up = junk[2]
+
+
+global function get_angle_to(atom x, atom y, atom x2, atom y2)
+  return (180- atan2(x2 - x ,y2 - y) *180/PI)
+
+end function
+
+global function degtorad(atom angle)
+	  return (angle * (PI/180))
+end function

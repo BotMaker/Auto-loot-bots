@@ -1,0 +1,27 @@
+global function load_packet_write(integer client,integer id)
+  sequence data,temp
+  data={}
+
+  data=writeint(data,id)
+  data=writebyte(data,0)
+
+  temp=reverse(int_to_bytes(length(data)+5)) &load_packet
+
+  data=rc4_arcfour_encrypt_block(client_list[client][client_rc4_2],data)
+  return temp & data
+end function
+
+
+global function create_packet_write(integer client)
+  sequence data,temp
+  data={}
+
+  data=writeshort(data,782)
+  data=writeshort(data,0)
+
+  temp=reverse(int_to_bytes(length(data)+5)) &create_packet
+
+  data=rc4_arcfour_encrypt_block(client_list[client][client_rc4_2],data)
+
+  return temp & data
+end function

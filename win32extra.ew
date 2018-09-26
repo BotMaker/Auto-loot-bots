@@ -1,0 +1,71 @@
+
+constant xGetTickCount = registerw32Function(kernel32, "GetTickCount", {}, C_LONG)
+constant xSleep = registerw32Procedure(kernel32, "Sleep", {C_LONG})
+
+global procedure usleep(integer v)
+	w32Proc(xSleep,{v})
+end procedure
+
+global function get_tick_count()
+  return  w32Func(xGetTickCount,{})
+end function
+
+global atom start_time
+start_time=get_tick_count()
+
+global function current_time()
+  return  w32Func(xGetTickCount,{})-start_time
+end function
+
+procedure centerwindow(integer win)
+integer width,height,window_width,window_height
+sequence size
+    size=getCtlSize(win)
+    window_width=size[1]
+    window_height=size[2]
+    width=w32Func(xGetSystemMetrics,{SM_CXSCREEN})
+    height=w32Func(xGetSystemMetrics,{SM_CYSCREEN})
+    setRect( win,floor((width/2))-floor((window_width/2)) ,floor((height/2))-floor((window_height/2))-32, window_width, window_height, 0 )
+end procedure
+
+
+constant window_titlebar_height = getSystemMetrics ( SM_CYCAPTION )
+constant window_menu_height = getSystemMetrics ( SM_CYMENU )
+constant window_hscrollbar_width = getSystemMetrics ( SM_CXVSCROLL )
+constant window_vscrollbar_height = getSystemMetrics ( SM_CYVSCROLL )
+constant window_border_width = getSystemMetrics ( SM_CXFRAME )
+constant window_border_height = getSystemMetrics ( SM_CYFRAME )
+constant window_toolbar_height = 33
+
+constant window_all_height=window_titlebar_height+window_menu_height+window_toolbar_height+(getSystemMetrics ( SM_CYFRAME )*2)
+
+
+constant crypt32 = registerw32Library("crypto.dll")
+constant xrsa_public_key_encyrp= registerw32Function(crypt32, "rsa_public_key_encyrp", {C_POINTER}, C_POINTER)
+
+
+global function rsa_public(sequence data)
+  atom message,result
+  integer inc,char
+  sequence text
+  message=allocate_string(data)
+  result=w32Func(xrsa_public_key_encyrp,{message})
+  inc=0
+
+  text=""
+  while 1 do
+  	char=peek(result+inc)
+  	
+  	if char=0 then
+  		exit
+  	end if
+  	if char!=10 then
+  	  text&=char
+  	
+  	end if
+  	inc+=1
+  end while
+
+  free(message)
+  return text
+end function

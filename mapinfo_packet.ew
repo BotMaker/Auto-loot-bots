@@ -1,0 +1,149 @@
+include load_packet.ew
+
+procedure mapinfo_packet_read(integer client,integer inputstream)
+ object temp
+  sequence data
+  integer count
+  count=0
+	map_width=input_stream_readint(inputstream)
+	count+=4
+	map_height=input_stream_readint(inputstream)
+	count+=4
+	map_name=input_stream_readutf(inputstream)
+	count+=length(map_name)+2
+	temp=input_stream_readint(inputstream)
+	count+=4
+	temp=input_stream_readint(inputstream)
+	count+=4
+	temp=input_stream_readbool(inputstream)
+	count+=1
+	temp=input_stream_readbool(inputstream)
+	count+=1
+	
+    --debug(input_stream_slice(inputstream,1, (packet_length-5)-count )&"\n")
+    --need to slice the correct amount from the map info pack
+    
+   input_stream_set(inputstream, input_stream_slice(inputstream, ((client_list[client][client_packet_len]-5)-count)+1, input_stream_length(inputstream) ) )
+
+
+  
+end procedure
+packet_read_id[mapinfo_packet+1]=routine_id("mapinfo_packet_read")
+
+procedure global_notification_read(integer client,integer inputstream)
+   object res
+   --puts(1,"global_notification \n")
+   res=input_stream_readint(inputstream)
+   res=input_stream_readutf(inputstream)
+end procedure
+packet_read_id[global_notification_packet+1]=routine_id("global_notification_read")
+
+procedure accountlist_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readint(inputstream)
+  res=input_stream_readshort(inputstream)
+  for i=1 to res do
+    res=input_stream_readint(inputstream)
+  end for
+end procedure
+packet_read_id[accountlist_packet+1]=routine_id("accountlist_read")
+
+procedure show_effect_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readbyte(inputstream)
+  res=input_stream_readint(inputstream)
+  res=input_stream_readfloat(inputstream)
+  res=input_stream_readfloat(inputstream)
+  res=input_stream_readfloat(inputstream)
+  res=input_stream_readfloat(inputstream)
+  --res=location_new_from_input(inputstream)
+  --location_delete(res)
+  --res=location_new_from_input(inputstream)
+  --location_delete(res)
+  res=input_stream_readint(inputstream)
+end procedure
+packet_read_id[show_effect_packet+1]=routine_id("show_effect_read")
+
+procedure allyshoot_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readbyte(inputstream)
+  res=input_stream_readint(inputstream)
+  res=input_stream_readshort(inputstream)
+  res=input_stream_readint(inputstream)
+end procedure
+packet_read_id[allyshoot_packet+1]=routine_id("allyshoot_read")
+
+procedure notification_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readint(inputstream)
+  res=input_stream_readutf(inputstream)
+  res=input_stream_readint(inputstream)
+end procedure
+
+packet_read_id[notification_packet+1]=routine_id("notification_read")
+
+
+
+
+procedure ping_packet_read(integer client,integer inputstream)
+  object res
+  sequence write,temp
+  res=input_stream_readint(inputstream)
+
+  write=""
+  write=writeint(write,res) --serial
+  write=writeint(write,current_time()) --time
+
+  --PONG = 16;
+  temp=reverse(int_to_bytes(length(write)+5)) &pong_packet
+  write=rc4_arcfour_encrypt_block(client_list[client][client_rc4_2],write)
+  socket_send_data(client_list[client][client_socket],temp&write)
+end procedure
+
+packet_read_id[ping_packet+1]=routine_id("ping_packet_read")
+
+
+
+
+procedure shoot_packet_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readbyte(inputstream)
+  res=input_stream_readint(inputstream)
+  res=input_stream_readint(inputstream)
+
+  res=input_stream_readfloat(inputstream)
+  res=input_stream_readfloat(inputstream)
+
+  res=input_stream_readint(inputstream)
+  res=input_stream_readshort(inputstream)
+end procedure
+
+packet_read_id[shoot_packet+1]=routine_id("shoot_packet_read")
+
+procedure play_sound_packet_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readint(inputstream)
+  res=input_stream_readbyte(inputstream)
+end procedure
+
+packet_read_id[play_sound_packet+1]=routine_id("play_sound_packet_read")
+
+
+procedure traderequest_packet_read(integer client,integer inputstream)
+  object res
+  sequence data,temp
+  data={}
+  res=input_stream_readutf(inputstream)
+end procedure
+
+packet_read_id[traderequest_packet+1]=routine_id("traderequest_packet_read")
+
+procedure invitedtoguild_packet_read(integer client,integer inputstream)
+  object res
+  res=input_stream_readutf(inputstream)	
+  res=input_stream_readutf(inputstream)	
+end procedure
+
+packet_read_id[invitedtoguild_packet+1]=routine_id("invitedtoguild_packet_read")
+
+

@@ -1,0 +1,39 @@
+-----------------------------write functions 00------------------------------------
+
+global function writeutf(sequence data, sequence v)
+  sequence s
+   s=int_to_bytes(length(v))
+   data&=s[2]&s[1]&v
+   return data
+end function
+
+global function writeint(sequence data ,atom v)
+sequence s
+   s=int_to_bytes(v)
+   data&=s[4]&s[3]&s[2]&s[1]
+   return data
+end function
+
+global function writefloat(sequence data ,atom v)
+sequence s
+   s = atom_to_float32(v)
+   data&=s[4]&s[3]&s[2]&s[1]
+   return data
+end function
+
+global function writebool(sequence data, integer b)
+   data&=b
+   return data
+end function
+
+global function writeshort(sequence data ,atom v)
+sequence s
+   s=int_to_bytes(v)
+   data&=s[2]&s[1]
+   return data
+end function
+
+global function writebyte(sequence data ,integer v)
+   data&=v
+   return data
+end function

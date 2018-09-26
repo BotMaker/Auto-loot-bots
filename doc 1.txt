@@ -1,0 +1,29 @@
+[B]How they work[/B]
+
+There is a file called accounts.txt,
+You must edit this file with 4 of your mule account details, at the moment there is no option to choose the amount of bots 
+Nor is there a easy to use interface for setting the 4 mule account details.
+
+I forgot to mention someone needs to build a general  list of items to auto loot, 
+there is a interface provided to edit the items to be auto looted, also don’t forget to click save. 
+
+[B]Only one instance of the program can be run at one time.[/B]
+[IMG]http://i43.tinypic.com/lbfqc.jpg[/IMG]
+
+
+[B]System requirements[/B]
+Minimum Dual core 
+
+The cpu should be at least a 1st generation Intel I-core processor, the released date of the cpu should be at least 2010+.  
+
+My laptop is 2.53ghz M380 I-Core 3, I have trouble running 4 bots in the us west server there often discounted. 
+
+This is a early alpha release, please report bugs and issues you may encounter also new feature requests are welcome as usual. 
+Remember these auto loot bots have been coded in a couple of days and there are going to be bugs and issues.
+
+The auto loot bots are extremely negative and shouldn’t be apart of this game at all, but kabam is not fighting the auto loot bots in anyway, so the reason for me releasing can be found here.
+[url]http://www.mpgh.net/forum/654-realm-mad-god-discussions/677884-auto-loot-bots-5.html#post8228377[/url]
+
+[url]https://www.virustotal.com/en-gb/file/38fe44221be9a6a1cadfbad1a998a4b88a3178ccdf1b4ba3bcedd257a1da08e3/analysis/1370480401/[/url]
+[url]http://virusscan.jotti.org/en/scanresult/5f670daf6472105127396d00a0431b48b695c413[/url]
+[ATTACH]172301[/ATTACH]

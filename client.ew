@@ -1,0 +1,58 @@
+include input_stream.ew
+include rc4.ew
+
+sequence key1,key2
+key1={114,197,88,60,175,182,129,137,149,203,215,75,128}
+key2={49,31,128,105,20,81,199,27,9,161,58,42,110}
+
+
+
+global sequence client_list,client_freelist
+client_list={}
+client_freelist={}
+global constant client_email = 1
+global constant client_pass = 2
+global constant client_serverip = 3
+global constant client_rc4_1 = 4
+global constant client_rc4_2 = 5
+global constant client_inputstream = 6
+global constant client_socket = 7
+global constant client_data = 8
+global constant client_packet_len = 9
+global constant client_object_id = 10
+global constant client_account_id = 11
+global constant client_last_move_time =12
+global constant client_player_class_handle =13
+
+
+global function client_new(sequence email, sequence pass, sequence serverip, integer sock, integer id, integer account_id )
+  integer handle
+  integer rc4_1,rc4_2
+  if length(client_freelist)>0 then
+    handle= client_freelist[1]
+    client_freelist = client_freelist[2..length(client_freelist)]
+  else
+    client_list= append(client_list,{0})
+    handle=length(client_list)
+  end if
+  
+  
+  rc4_1=rc4_new()
+  rc4_2=rc4_new()
+  rc4_arcfour_init_encrypt(rc4_1,key1)
+  rc4_arcfour_init_encrypt(rc4_2,key2)
+
+  client_list[handle]={email,pass,serverip, rc4_1, rc4_2 ,input_stream_new(), sock, id, 0 ,0,account_id,0,0}
+
+  return handle
+end function
+
+global procedure client_set_packet_len(integer handle, integer v)
+  client_list[handle][client_packet_len]=v
+end procedure
+
+
+global procedure client_delete(integer handle)
+  client_list[handle]={}
+  client_freelist =append(client_freelist, handle)
+end procedure

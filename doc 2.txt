@@ -1,0 +1,65 @@
+[B]How they work[/B]   
+
+[B]Update from version 01 to 02[/B]  
+
+There is a file called accounts.txt,
+You must edit this file with 4 of your mule account details, at the moment there is no option to choose the amount of bots 
+Nor is there a easy to use interface for setting the 4 mule account details.
+
+[B]know bugs[/B]
+{
+[B]I tested dropping a potion of defense near a bot and it says would loot potion of defense but the bots dont do anything.[/B]
+
+Without going into depth, the reason the bot doesn’t loot the item when you drop it is because you was in the server/nexus before the bots where, quick fix is to start the bots before you enter the server,  also if the bot's inv is full it won't loot.
+
+[B]Trading request and Invite to guild  -> dc    Packet id 61, 77 [/B]
+}
+
+I forgot to mention someone needs to build a general  list of items to auto loot, 
+there is a interface provided to edit the items to be auto looted, also don’t forget to click save. 
+
+[B]Only one instance of the program can be run at one time.[/B]
+[IMG]http://i43.tinypic.com/lbfqc.jpg[/IMG]
+
+
+[B]Console output[/B]
+{
+The “would loot” message is there to indicate there is a item the bot would like to loot.
+
+Below that message is a “invresult” message and there is also a number
+if the number equals -1 then it didn’t loot the item
+if the number equals 0 then the item was successfully looted
+
+[B]try connecting to a less populate server, if your seeing the "sending data error" repeatedly it means your cpu is not Powerful enough to run 4 bots on that server.[/B]
+}
+
+
+[B]System requirements[/B]
+Minimum Dual core 
+
+The cpu should be at least a 1st generation Intel I-core processor, the released date of the cpu should be at least 2010+.  
+
+My laptop is 2.53ghz M380 I-Core 3, I have trouble running 4 bots in the us west server there often discounted. 
+
+
+This is a early alpha release, please report bugs and issues you may encounter also new feature requests are welcome as usual. 
+Remember these auto loot bots have been coded in a couple of days and there are going to be bugs and issues.
+
+The auto loot bots are extremely negative and shouldn’t be apart of this game at all, but kabam is not fighting the auto loot bots in anyway, so the reason for me releasing can be found here.
+[url]http://www.mpgh.net/forum/654-realm-mad-god-discussions/677884-auto-loot-bots-5.html#post8228377[/url]
+
+
+[B]Update from version 01 to 02[/B]
+
+[IMG]http://i41.tinypic.com/2s1khuh.jpg[/IMG]
+[url]http://i41.tinypic.com/2s1khuh.jpg[/url]
+
+
+[B]Change log version 02[/B]
+Loot bots would teleport to loot even if there inventory was full and the others bots would ignore the loot drop.
+Speed improvements,  lots of repeated indexing was shorten and replaced with faster methods.
+The unknown packets  61 and 77 fixed.
+Code was cleaned up and made easier to read.
+Play a sound when the bots loot a item.
+Added a account GUI to manage the accounts including setting each loot bots location.
+There is no limit on the number of loot bots , you can add accounts without a limit.

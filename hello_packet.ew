@@ -1,0 +1,64 @@
+sequence guild_len
+guild_len="DD07BF9C5B705619407D6130A5B289EA856859A8"
+
+global function create_random_guild()
+sequence temp,char_set
+   char_set={"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}
+   temp={}
+   for i=1 to length(guild_len) do
+   	 temp&=char_set[rand(length(char_set))]
+   end for	
+   return temp
+end function
+
+
+global function hello_packet_write(integer client,sequence email, sequence pass)
+  sequence data,temp
+  data={}
+  --puts(1,"hello_packet\n")
+  data=writeutf(data,"15.0") --build version
+  --?game_id
+  data=writeint(data,game_id) --game id
+  --data=writeutf(data,"XRU8xQGLzCLaQR2BMOVLE9aPLggIPbNcig/rA1Wyi+KnlfIO02VXKpDEMO7hjscFXccRGOnTHpKoLkbuo2OXrU0wGWzJLsNGSf007Ga71Eu6VCZ61dNIzm71qKl9B5z7ERceI/JFk9NQ7RvmdQpK1s+bB9qAsVWGwhlECBA4EU0=")--create_guest_guid_java())--"PAP6RSeDHDRLpNVO4dw7oMsZS/6gIdnSFj9LHjI/YL8Al61XUPAxMtx5d/fYzmdwbgdRed6X1pHcVKUX16q59wvlzVouQZeim0P8HwXxbuMWwS+Bf9YFUANoriQzjMV/PlNAc17GfxkVQAn2LNYSV3m+BfEAwE6/WUNtyIYZJWI=") --guid
+  --data=writeutf(data,"Z+TWxbDpdKsNAKn358XZHOTI4nZEI4/oCrOB7CI8uDYdgWmXN4DKwfCcONgurW+xrGEWoLzviOyg5yRYxaeV55N7OB75OSGtslcs4Tjc8oNRILQG5wofw2YH+MG/jWshUfxC8yQBWJ/Akn+j1ROuS4+CEgjklZjLGC/Oc0EVgDQ=")
+
+   --login deatils
+  --temp=create_login_guid_java("gdasgdshgdsh@gmail.com","123456")
+  data=writeutf(data,rsa_public(email) )
+  data=writeutf(data, rsa_public(pass) )
+  --puts(1,temp[1]&"\n")
+  --puts(1,temp[2]&"\n")
+
+  --guest accoun login
+  --data=writeutf(data,create_guest_guid_java())
+  --data=writeutf(data,"") --pass
+
+  data=writeutf(data,"") --secert
+  data=writeint(data,key_time) --key time
+  data=writeshort(data,key_size) --key_size
+  if key_size!=0 then
+  	--data=writebyte(data,0) -- key
+  	for i=1 to key_size do
+  		data=writebyte(data,key[i])
+  	end for
+  end if
+
+
+  data=writeint(data,0)  --jd length
+  --data=writebyte(data,0) -- jd bytes
+
+  data=writeutf(data,"") --pk
+  data=writeutf(data,"rotmg") --tq
+  data=writeutf(data,"") --h
+  data=writeutf(data,"rotmg") --platforum
+
+  data=writeutf(data,"") --unknow
+
+  temp=reverse(int_to_bytes(length(data)+5)) &hello_packet
+
+  data=temp&rc4_arcfour_encrypt_block(client_list[client][client_rc4_2],data)
+  --if WsockSendData(Server_sock,data)!=length(data) then
+  --	puts(1,"sending error\n")
+  --end if
+  return data
+end function

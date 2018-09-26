@@ -1,0 +1,68 @@
+global constant fail_packet=0
+global constant useportal_packet=3--USEPORTAL = 3;
+global constant invresult_packet=4--INVRESULT = 4
+global constant ping_packet=6
+global constant move_packet=7 --MOVE = 7;
+global constant global_notification_packet=9
+global constant updateatt_packet=11--UPDATEATT = 11;
+global constant tradedone_packet=12--TRADEDONE:int = 12;
+global constant shoot_packet=13
+global constant gotoack_packet=14--GOTOACK = 14;
+global constant pong_packet=16
+global constant hello_packet=17
+global constant requesttrade_packet=21--REQUESTTRADE = 21;
+global constant tradechanged_packet=23--TRADECHANGED = 23;
+global constant text_packet=25 --TEXT
+global constant update_packet=26
+global constant create_suc_packet=31
+global constant create_packet=36
+global constant reconnect_packet=39--RECONNECT = 39;
+global constant play_sound_packet=44
+global constant load_packet=45
+global constant accountlist_packet=46
+global constant goto_packet=52
+global constant show_effect_packet=56
+global constant mapinfo_packet=60
+global constant traderequest_packet=61 --TRADEREQUESTED = 61;
+global constant new_tick_packet=62-- NEW_TICK = 62
+global constant notification_packet=63 --NOTIFICATION
+global constant tradestart_packet=67--TRADESTART = 67;
+global constant allyshoot_packet=74 --ALLYSHOOT
+global constant clientstat_packet=75--CLIENTSTAT = 75;
+global constant invitedtoguild_packet=77--INVITEDTOGUILD = 77;
+
+
+
+global sequence packet_names,packet_read_id
+packet_names=repeat("",100)
+packet_read_id=repeat(-1,100)
+
+packet_names[ fail_packet+1 ]= "failed"
+packet_names[ useportal_packet+1 ]= "useportal"
+packet_names[ invresult_packet+1 ] ="invresult"
+packet_names[ ping_packet+1 ]= "ping"
+packet_names[ global_notification_packet+1 ]= "global notifcaion"
+packet_names[ tradedone_packet+1 ]= "tradedone"
+packet_names[ shoot_packet+1 ]= "shoot"
+packet_names[ hello_packet+1 ]= "hello"
+packet_names[ requesttrade_packet+1 ]= "requesttrade"
+packet_names[ tradechanged_packet+1 ]= "tradechanged"
+packet_names[ text_packet+1 ]= "text"
+packet_names[ update_packet+1 ]= "update"
+packet_names[ create_suc_packet+1 ]= "create sucs"
+packet_names[ create_packet+1 ]= "create packet"
+packet_names[ reconnect_packet+1 ]= "reconnect"
+packet_names[ play_sound_packet+1 ]= "play sound"
+packet_names[ load_packet+1 ]= "load packet"
+packet_names[ accountlist_packet+1 ]= "accountlist"
+packet_names[ goto_packet+1 ]= "goto packet"
+packet_names[ show_effect_packet+1 ]= "show effect"
+packet_names[ mapinfo_packet+1 ]= "mapinfo"
+packet_names[ traderequest_packet+1 ]= "traderequest"
+packet_names[ new_tick_packet+1 ]= "new tick"
+packet_names[ notification_packet+1 ]= "notification"
+packet_names[ tradestart_packet+1 ]= "tradestart"
+--packet_names[ playertext_packet+1 ]= "playertext"
+packet_names[ allyshoot_packet+1 ]= "allyshoot"
+packet_names[ clientstat_packet+1 ]= "clientstat"
+packet_names[ invitedtoguild_packet+1 ]= "invitedtoguild"
